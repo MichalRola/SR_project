@@ -20,7 +20,7 @@ public class Agent_Controller : MonoBehaviour
 
     private void Update()
     {
-        _characterController.Move(_direction *speed * Time.deltaTime);
+        _characterController.Move(_direction * speed * Time.deltaTime);
     }
 
     public void Move(InputAction.CallbackContext context)
