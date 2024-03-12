@@ -2,34 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestController : MonoBehaviour
-{
-    public float speed = 5.0f;
-    public float jumpPower = 8.0f;
-    Rigidbody rb;
+public class TestController : MonoBehaviour {
 
-    float xDirection, zDirection;
+    [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float jumpPower = 5.0f;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
+    private Rigidbody rb;
+    private float xDirection, zDirection;
+
+    private void Start() {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
         xDirection = Input.GetAxis("Vertical");
         zDirection = -Input.GetAxis("Horizontal");
+        
+        bool IsGrounded() {
+            return Physics.Raycast(transform.position, -Vector3.up, 0.51f);
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        if (Input.GetKeyDown(KeyCode.Space) & IsGrounded()) {
             rb.velocity += Vector3.up * jumpPower;
         }
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         rb.velocity = new Vector3(xDirection * speed, rb.velocity.y, zDirection * speed);
     }
 }
